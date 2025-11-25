@@ -44,7 +44,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Reports',
-        href: '#',
+        href: '/reports',
         icon: Package,
     },
 ];

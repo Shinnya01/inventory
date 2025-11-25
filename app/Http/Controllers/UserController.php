@@ -31,9 +31,22 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => bcrypt($validated['password']),
+    ]);
+
+    return back()->with('success', 'User created successfully.');
+}
+
 
     /**
      * Display the specified resource.
@@ -84,8 +97,12 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
     // public function destroy(string $id)
-    public function destroy()
-    {
-        dd('delete');
-    }
+    public function destroy($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return back()->with('success', 'User deleted successfully.');
+}
+
 }

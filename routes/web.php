@@ -21,8 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('product-management', ProductController::class);
     Route::resource('stock-movement', StockController::class);
     Route::resource('inventory-alerts', InventoryController::class);
-    Route::resource('reports', ReportController::class);
-
+    Route::resource('reports', ReportController::class);    
     Route::resource('user-management', UserController::class);
 });
 
