@@ -68,3 +68,16 @@ export interface Stock {
     product: Product;
     user: User;
 }
+
+export interface ReportType {
+  id: number
+  name: string        // product name
+  quantity: number    // stock moved
+  detail: string      // 'Admin added stock', 'User bought', etc.
+  date: string        // movement date
+  status: string
+  created_at: string;
+  
+  product: Product;
+}
+

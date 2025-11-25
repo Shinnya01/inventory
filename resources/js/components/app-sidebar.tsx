@@ -44,7 +44,7 @@ const adminNavItems: NavItem[] = [
     },
     {
         title: 'Reports',
-        href: '#',
+        href: '/reports',
         icon: Package,
     },
 ];
@@ -66,7 +66,7 @@ const userNavItems: NavItem[] = [
     },
     {
         title: 'Reports',
-        href: '#',
+        href: '/reports',
         icon: Package,
     },
 ];

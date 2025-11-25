@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Stock;
+use App\Models\Report;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,15 @@ class ProductController extends Controller
             'quantity'      => $validated['stock'],
             'movement_type' => 'in',
             'user_id'       => auth()->id(),
+        ]);
+
+        Report::create([
+            'product_id'    => $product->id,
+            'user_id'       => auth()->id(),
+            'movement_type' => 'in',
+            'quantity'      => $validated['stock'],
+            'detail'        => 'Stock added by' . auth()->user()->name,
+            'current_stock' => $validated['stock'],
         ]);
 
         return back()->with('success', 'Product created successfully.');

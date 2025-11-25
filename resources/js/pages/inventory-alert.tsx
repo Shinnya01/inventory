@@ -38,22 +38,20 @@ export default function ProductManagement({inventories}: {inventories: Product[]
                                 </TableCell>
                                 <TableCell
                                     className={
-                                        inventory.stock <= 10
+                                        inventory.stock <= 0
                                             ? 'font-semibold text-red-600'
-                                        : inventory.stock <= 20    
+                                        : inventory.stock <= 10
                                             ? 'font-semibold text-yellow-600'
-                                        : inventory.stock > 20    
-                                            ? 'font-semibold text-green-600'
-                                            : ''
+                                        :  'font-semibold text-green-600'
+                                            
                                     }
                                 >
-                                    {inventory.stock <= 10
+                                    {inventory.stock <= 0
                                         ? 'Critical'
-                                    : inventory.stock <= 20    
+                                    : inventory.stock <= 10   
                                         ? 'Low Stock'
-                                    : inventory.stock > 20    
-                                        ? 'In Stock'
-                                        : ''}
+                                    :  'In Stock'
+                                    }
                                 </TableCell>
                                 <TableCell className="text-right">
                                     {inventory.stock}
@@ -65,7 +63,7 @@ export default function ProductManagement({inventories}: {inventories: Product[]
                     <TableFooter>
                         <TableRow>
                             <TableCell colSpan={2}>
-                                Total Low-Stock Items
+                                Total Stock
                             </TableCell>
                             <TableCell className="text-right">
                                 {inventories.length}
