@@ -33,7 +33,17 @@ const mainNavItems: NavItem[] = [
         icon: Pen,
     },
     {
-        title: 'Stock Management',
+        title: 'Stock Movement',
+        href: '/stock-movement',
+        icon: Package,
+    },
+    {
+        title: 'Inventory Alerts',
+        href: '/inventory-alerts',
+        icon: Package,
+    },
+    {
+        title: 'Reports',
         href: '#',
         icon: Package,
     },
