@@ -73,6 +73,7 @@ export interface ReportType {
   id: number
   name: string        // product name
   quantity: number    // stock moved
+  current_stock: number
   detail: string      // 'Admin added stock', 'User bought', etc.
   date: string        // movement date
   status: string

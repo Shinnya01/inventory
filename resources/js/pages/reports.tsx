@@ -26,26 +26,17 @@ import { Head } from '@inertiajs/react';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { ReportType, SharedData } from '@/types';
 type TableRowType = {
   id: number;
   name: string;
   quantity: number;
+  current_stock: number;
   detail: string;
   date: string;
   status: string;
 };
-
 
 export default function Reports({reports}: {reports: ReportType[]}) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -58,6 +49,7 @@ export default function Reports({reports}: {reports: ReportType[]}) {
     name: report.product.name,
     quantity: report.quantity,
     detail: report.detail,
+    current_stock: report.current_stock,
     date: new Date(report.created_at).toLocaleString(),
     status:
       report.quantity <= 0
@@ -67,28 +59,6 @@ export default function Reports({reports}: {reports: ReportType[]}) {
         : "In Stock",
   }));
   const columns: ColumnDef<TableRowType>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -125,6 +95,21 @@ export default function Reports({reports}: {reports: ReportType[]}) {
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("detail")}</div>
     ),
+  },
+  {
+    accessorKey: "current_stock",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Stock
+          <ArrowUpDown />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase ml-3">{row.getValue("current_stock")}</div>,
   },
   {
     accessorKey: "status",
@@ -207,32 +192,6 @@ export default function Reports({reports}: {reports: ReportType[]}) {
 
             className="max-w-sm"
             />
-            <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                Columns <ChevronDown />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                    return (
-                    <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                        }
-                    >
-                        {column.id}
-                    </DropdownMenuCheckboxItem>
-                    )
-                })}
-            </DropdownMenuContent>
-            </DropdownMenu>
         </div>
         <div className="overflow-hidden rounded-md border">
             <Table>

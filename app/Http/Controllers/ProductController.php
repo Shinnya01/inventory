@@ -53,7 +53,7 @@ class ProductController extends Controller
             'user_id'       => auth()->id(),
             'movement_type' => 'in',
             'quantity'      => $validated['stock'],
-            'detail'        => 'Stock added by' . auth()->user()->name,
+            'detail'        => 'Stock added by ' . auth()->user()->name,
             'current_stock' => $validated['stock'],
         ]);
 

@@ -41,6 +41,11 @@ export default function ProductManagement({products} : {products:Product[]}) {
         stock: "",
     });
 
+    const buyForm = useForm({
+        quantity: 0,
+    });
+
+
 
     const handleCreate = (e: React.FormEvent) => {
         e.preventDefault();
@@ -155,7 +160,43 @@ export default function ProductManagement({products} : {products:Product[]}) {
                             ) : (
                                 <TableCell className="text-right space-x-2">
                                 
-                                    <Button size="sm" className="bg-blue-500 hover:bg-blue-600">Buy</Button>
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
+                                                Buy
+                                            </Button>
+                                        </DialogTrigger>
+
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>Buy {product.name}</DialogTitle>
+                                            </DialogHeader>
+
+                                            <form
+                                                onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    buyForm.post(`/buy/${product.id}`, {
+                                                        onSuccess: () => buyForm.reset(),
+                                                    });
+
+                                                }}
+                                                className="space-y-4"
+                                            >
+                                                <Label>Quantity</Label>
+                                                <Input
+                                                    type="number"
+                                                    min="1"
+                                                    value={buyForm.data.quantity}
+                                                    onChange={(e) => buyForm.setData("quantity", Number(e.target.value))}
+                                                />
+
+                                                <Button type="submit" disabled={buyForm.processing}>
+                                                    Confirm Purchase
+                                                </Button>
+                                            </form>
+                                        </DialogContent>
+                                    </Dialog>
+
                                 
                                 </TableCell>
                                 )

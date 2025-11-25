@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BuyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\ReportController;
@@ -24,6 +25,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('reports', ReportController::class);
 
     Route::resource('user-management', UserController::class);
+
+    Route::post('/buy/{product}', [BuyController::class, 'store'])->name('buy.store');
+
 });
 
 require __DIR__.'/settings.php';

@@ -47,7 +47,7 @@ export default function ProductManagement({inventories}: {inventories: Product[]
                                     }
                                 >
                                     {inventory.stock <= 0
-                                        ? 'Critical'
+                                        ? 'Out of Stock'
                                     : inventory.stock <= 10   
                                         ? 'Low Stock'
                                     :  'In Stock'
