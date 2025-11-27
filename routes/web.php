@@ -19,7 +19,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('product-management', ProductController::class);
+    // Use 'product' as the route parameter so implicit model binding matches the controller type-hint.
+    Route::resource('product-management', ProductController::class)
+        ->parameters(['product-management' => 'product']);
     Route::resource('stock-movement', StockController::class);
     Route::resource('inventory-alerts', InventoryController::class);
     Route::resource('reports', ReportController::class);    

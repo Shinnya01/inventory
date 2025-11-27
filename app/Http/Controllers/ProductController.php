@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 use App\Models\Stock;
 use App\Models\Report;
 use App\Models\Product;
@@ -89,11 +90,32 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
         ]);
 
-        // Update product
-        $product->update($validated);
+        // Log incoming data for debugging
+        Log::info('ProductController@update called', [
+            'id' => $product->id,
+            'payload' => $validated,
+        ]);
 
-        // Return to previous page with success message
-        return redirect()->back()->with('success', 'Product updated successfully.');
+        // Update product
+        $updated = $product->update($validated);
+
+        Log::info('ProductController@update result', [
+            'id' => $product->id,
+            'updated' => $updated,
+            'product' => $product->toArray(),
+        ]);
+
+        // If the request comes from Inertia (SPA), return a redirect so Inertia can handle it.
+        if ($request->header('X-Inertia')) {
+            return redirect()->route('product-management.index')
+                ->with('success', 'Product updated successfully.');
+        }
+
+        // Fallback: return JSON for API callers
+        return response()->json([
+            'success' => true,
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -101,6 +123,25 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Log::info('ProductController@destroy called', ['id' => $product->id]);
+
+        $deleted = $product->delete();
+
+        Log::info('ProductController@destroy result', [
+            'id' => $product->id,
+            'deleted' => $deleted,
+        ]);
+
+        // If the request comes from Inertia, redirect back to the index so the SPA can handle the redirect.
+        if (request()->header('X-Inertia')) {
+            return redirect()->route('product-management.index')
+                ->with('success', $deleted ? 'Product deleted.' : 'Product could not be deleted.');
+        }
+
+        // Fallback JSON response
+        return response()->json([
+            'success' => true,
+            'deleted' => (bool) $deleted,
+        ]);
     }
 }

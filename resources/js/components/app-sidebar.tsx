@@ -13,70 +13,61 @@ import {
 import { dashboard } from '@/routes';
 import { SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Package, Pen, User } from 'lucide-react';
+import { Package, Pen, User, UsersIcon, FilePenLine , FileSliders, Siren, MegaphoneIcon, ShoppingBagIcon} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const adminNavItems: NavItem[] = [
     {
-        title: 'User Management',
+        title: 'Users Management',
         href: '/user-management',
-        icon: User,
+        icon: UsersIcon,
     },
     {
         title: 'Product Management',
         href: '/product-management',
-        icon: Pen,
+        icon: FilePenLine,
     },
     {
         title: 'Stock Movement',
         href: '/stock-movement',
-        icon: Package,
+        icon: FileSliders,
     },
     {
         title: 'Inventory Alerts',
         href: '/inventory-alerts',
-        icon: Package,
+        icon: Siren,
     },
     {
         title: 'Reports',
         href: '/reports',
-        icon: Package,
+        icon: MegaphoneIcon,
     },
 ];
 const userNavItems: NavItem[] = [
     {
-        title: 'Product Management',
+        title: 'Products',
         href: '/product-management',
-        icon: Pen,
+        icon: ShoppingBagIcon,
     },
     {
         title: 'Stock Movement',
         href: '/stock-movement',
-        icon: Package,
+        icon: FileSliders,
     },
     {
         title: 'Inventory Alerts',
         href: '/inventory-alerts',
-        icon: Package,
+        icon: Siren,
     },
     {
         title: 'Reports',
         href: '/reports',
-        icon: Package,
+        icon: MegaphoneIcon,
     },
 ];
 
 const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+
 ];
 
 export function AppSidebar() {
@@ -87,7 +78,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href='/' prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Report;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ReportController extends Controller
 {
